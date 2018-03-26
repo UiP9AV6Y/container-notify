@@ -1,0 +1,18 @@
+FROM alpine:3.7
+
+WORKDIR /src
+COPY . .
+RUN set -xe; \
+  apk add --no-cache \
+    ruby \
+    ruby-json \
+    ruby-bundler \
+  && apk add --no-cache --virtual .builddeps \
+    build-base \
+    ruby-dev \
+    git \
+  && bundler install \
+  && apk del .builddeps
+
+VOLUME ["/src"]
+CMD ["./bin/container-notify"]

@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+
+require 'listen'
+
+require 'container-notify'
+require 'container-notify/bin'
+
+if !defined?(JRUBY_VERSION) && Signal.list.keys.include?('INT')
+  Signal.trap('INT') do
+    Thread.new do
+      Listen.stop
+    end
+  end
+end
+
+exit ContainerNotify::Bin.new(ARGV, ENV).run

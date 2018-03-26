@@ -1,0 +1,53 @@
+
+AllCops:
+  RunRailsCops: false
+
+AllCops:
+  TargetRubyVersion: 2.2
+  Include:
+    - "./**/*.rb"
+  Exclude:
+    - bin/*
+    - ".vendor/**/*"
+    - Gemfile
+    - Rakefile
+    - "*.gemspec"
+    - pkg/**/*
+    - spec/fixtures/**/*
+    - vendor/**/*
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+  Enabled: true
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'lib/**/*.rb'
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - 'container-notify.gemspec'
+    - 'lib/container-notify.rb'

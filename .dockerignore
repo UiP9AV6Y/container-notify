@@ -1,0 +1,9 @@
+/.git/
+/pkg/
+/coverage/
+.DS_Store
+*.swp
+*.gem
+Gemfile.lock
+.rspec_status
+.ruby-*

@@ -1,0 +1,40 @@
+---
+
+version: '2.3'
+
+services:
+  monitor:
+    image: container-notify:dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    working_dir: /src
+    command:
+      - ./bin/container-notify
+      - --watch=/watch
+      - --notify=receiver:restart
+    environment:
+      FORCE_POLLING: 'true'
+      NOTIFY_LATENCY: 10
+      LOG_VERBOSITY: 1
+      COMPOSE_PROJECT: '.'
+    volumes:
+      - .:/src
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - trigger-data:/watch/trigger:ro
+
+  trigger:
+    image: alpine:3.7
+    command:
+      - sh
+      - -c
+      - 'while true; do sleep 30; echo "applying change"; touch /data/trigger; done'
+    volumes:
+      - trigger-data:/data
+
+  receiver:
+    image: alpine:3.7
+    command: [ "date" ]
+
+volumes:
+  trigger-data:
