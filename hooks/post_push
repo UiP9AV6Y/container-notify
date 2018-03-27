@@ -1,0 +1,15 @@
+#!/bin/bash
+set -eu
+
+if [[ "${DOCKER_TAG}" =~ ^v?[0-9.]+$ ]]; then
+  VERSION_MINOR=${DOCKER_TAG%.*}
+  VERSION_MAJOR=${DOCKER_TAG%%.*}
+
+  for ALT_TAG in {$VERSION_MINOR,$VERSION_MAJOR}; do
+    docker tag \
+      "${IMAGE_NAME}" \
+      "${DOCKER_REPO}:${ALT_TAG}"
+    docker push \
+      "${DOCKER_REPO}:${ALT_TAG}"
+  done
+fi
