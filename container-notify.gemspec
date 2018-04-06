@@ -15,12 +15,14 @@ Gem::Specification.new do |s|
   s.homepage      = 'https://github.com/uip9av6y/container-notify'
   s.license       = 'MIT'
 
-  all_files       = `find -type f -print0`.split("\x0")
-  test_files      = `find spec -type f -print0`.split("\x0")
+  all_files       = Dir.glob("{bin,lib}/**/*") 
+  test_files      = Dir.glob("{spec}/**/*")
+
+  all_files += %w[LICENSE.txt README.md container-notify.gemspec]
 
   s.files         = all_files - test_files
   s.test_files    = test_files
-  s.executables   = all_files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.executables   = %w[container-notify]
   s.require_paths = ['lib']
 
   s.required_ruby_version = '~> 2.2'
